@@ -34,12 +34,12 @@ module.exports = class LighthouseHelper {
       "accessibility": Math.round(reportJson.categories.accessibility.score * 100),
       "best-practices": Math.round(reportJson.categories["best-practices"].score * 100),
       "seo": Math.round(reportJson.categories.seo.score * 100),
-      "first-contentful-paint": reportJson.audits["first-contentful-paint"].displayValue,
-      "first-meaningful-paint": reportJson.audits["first-meaningful-paint"].displayValue,
-      "speed-index": reportJson.audits["speed-index"].displayValue,
-      "first-cpu-idle": reportJson.audits["first-cpu-idle"].displayValue,
-      "time-to-interactive": reportJson.audits["interactive"].displayValue,
-      "estimated-input-latency": reportJson.audits["estimated-input-latency"].displayValue,
+      "first-contentful-paint": Math.round(reportJson.audits["first-contentful-paint"].rawValue),
+      "first-meaningful-paint": Math.round(reportJson.audits["first-meaningful-paint"].rawValue),
+      "speed-index": Math.round(reportJson.audits["speed-index"].rawValue),
+      "first-cpu-idle": Math.round(reportJson.audits["first-cpu-idle"].rawValue),
+      "time-to-interactive": Math.round(reportJson.audits["interactive"].rawValue),
+      "estimated-input-latency": Math.round(reportJson.audits["estimated-input-latency"].rawValue),
     }
   }
 

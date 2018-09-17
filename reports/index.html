@@ -41,6 +41,7 @@
         <th>Accessibility</th>
         <th>Best Practices</th>
         <th>SEO</th>
+        <th>Latest Datetime</th>
       </tr>
     </thead>
   </table>
@@ -49,6 +50,12 @@
   <div id="accessibility" class="chart mini"></div>
   <div id="best-practices" class="chart mini"></div>
   <div id="seo" class="chart mini"></div>
+  <div id="first-contentful-paint" class="chart mini"></div>
+  <div id="first-meaningful-paint" class="chart mini"></div>
+  <div id="speed-index" class="chart mini"></div>
+  <div id="first-cpu-idle" class="chart mini"></div>
+  <div id="time-to-interactive" class="chart mini"></div>
+  <div id="estimated-input-latency" class="chart mini"></div>
   <script>
     function chartFromJson(jsonUrl, keyId) {
       var keyList = [];
@@ -78,13 +85,17 @@
       chartFromJson(jsonUrl, 'accessibility');
       chartFromJson(jsonUrl, 'best-practices');
       chartFromJson(jsonUrl, 'seo');
+      chartFromJson(jsonUrl, 'first-contentful-paint');
+      chartFromJson(jsonUrl, 'first-meaningful-paint');
+      chartFromJson(jsonUrl, 'speed-index');
+      chartFromJson(jsonUrl, 'first-cpu-idle');
+      chartFromJson(jsonUrl, 'time-to-interactive');
+      chartFromJson(jsonUrl, 'estimated-input-latency');
     }
 
     $(function () {
       $.extend($.fn.dataTable.defaults, {
-        language: {
-          url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-        }
+        // language: { url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json" }
       });
       $("#latestTable").DataTable({
         ajax: { url: "./latest.json", dataSrc: '' },
@@ -103,7 +114,7 @@
             data: "url",
             render: function (data, type, row, meta) {
               if (type === 'display') {
-                data = '<a href="' + row.name + '">' + data + '</a>';
+                data = '<a href="' + row.url + '">' + data + '</a>';
               }
               return data;
             }
@@ -112,7 +123,8 @@
           { data: "pwa" },
           { data: "accessibility" },
           { data: "best-practices" },
-          { data: "seo" }
+          { data: "seo" },
+          { data: "datetime" }
         ]
       });
     });

@@ -22,3 +22,4 @@ vi configs/targets.json
 ```
 sh run.sh
 ```
+-> reports/index.html

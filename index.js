@@ -1,2 +1,2 @@
-require('./task/analyze');
-require('./task/summary');
+require('./tasks/analyze');
+require('./tasks/summary');

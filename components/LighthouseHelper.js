@@ -42,20 +42,31 @@ module.exports = class LighthouseHelper {
   }
 
   static summary(rootPath, targets) {
+    let latestArray = [];
     targets.forEach(target => {
       const reportDirPath = rootPath + '/' + this.getReportDirRelativePath(target);
       const fileNames = fs.readdirSync(reportDirPath).filter(fileName => {
         return fileName.match(/_lighthouse.report.json/);
       });
       let summaryArray = [];
-      fileNames.forEach(fileName => {
+      for (let i = 0; i < fileNames.length; i++) {
+        const fileName = fileNames[i];
         const datetimeText = fileName.replace('_lighthouse.report.json', '');
         const reportJson = require(reportDirPath + '/' + fileName);
         const summaryJson = this.getSummaryJson(reportJson, datetimeText);
         summaryArray.push(summaryJson);
-      });
-      fs.writeFileSync(reportDirPath + "/summary.json", JSON.stringify(summaryArray));
+        if (i === fileNames.length - 1) {
+          let latestJson = Object.assign({
+            "name": target.name,
+            "url": target.url,
+            "path": this.getReportDirRelativePath(target) + '/summary.json',
+          }, summaryJson);
+          latestArray.push(latestJson);
+        }
+      }
+      fs.writeFileSync(reportDirPath + '/summary.json', JSON.stringify(summaryArray));
     });
+    fs.writeFileSync(rootPath + '/reports/latest.json', JSON.stringify(latestArray));
   }
 
 }

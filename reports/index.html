@@ -41,7 +41,7 @@
         <th>Accessibility</th>
         <th>Best Practices</th>
         <th>SEO</th>
-        <th>Latest Datetime</th>
+        <th>Latest FetchTime</th>
       </tr>
     </thead>
   </table>
@@ -57,7 +57,7 @@
   <div id="time-to-interactive" class="chart mini"></div>
   <div id="estimated-input-latency" class="chart mini"></div>
   <script>
-    function chartFromJson(jsonUrl, keyId) {
+    function chartFromJson(jsonUrl, keyId, axisY) {
       var keyList = [];
       keyList.push(keyId);
       return c3.generate({
@@ -74,23 +74,28 @@
         axis: {
           x: {
             type: 'category'
-          }
+          },
+          y: Object.assign({
+            padding: { top: 0, bottom: 0 }
+          }, axisY)
         }
       });
     }
 
     function reloadChart(jsonUrl) {
-      chartFromJson(jsonUrl, 'performance');
-      chartFromJson(jsonUrl, 'pwa');
-      chartFromJson(jsonUrl, 'accessibility');
-      chartFromJson(jsonUrl, 'best-practices');
-      chartFromJson(jsonUrl, 'seo');
-      chartFromJson(jsonUrl, 'first-contentful-paint');
-      chartFromJson(jsonUrl, 'first-meaningful-paint');
-      chartFromJson(jsonUrl, 'speed-index');
-      chartFromJson(jsonUrl, 'first-cpu-idle');
-      chartFromJson(jsonUrl, 'time-to-interactive');
-      chartFromJson(jsonUrl, 'estimated-input-latency');
+      // Score
+      chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 });
+      chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 });
+      chartFromJson(jsonUrl, 'accessibility', { max: 100, min: 0 });
+      chartFromJson(jsonUrl, 'best-practices', { max: 100, min: 0 });
+      chartFromJson(jsonUrl, 'seo', { max: 100, min: 0 });
+      // Detail
+      chartFromJson(jsonUrl, 'first-contentful-paint', { min: 0 });
+      chartFromJson(jsonUrl, 'first-meaningful-paint', { min: 0 });
+      chartFromJson(jsonUrl, 'speed-index', { min: 0 });
+      chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 });
+      chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 });
+      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 });
     }
 
     $(function () {

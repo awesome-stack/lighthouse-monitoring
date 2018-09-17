@@ -9,5 +9,14 @@
     "monitoring",
     "performance"
   ],
-  "main": "index.js"
+  "main": "index.js",
+  "dependencies": {
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }

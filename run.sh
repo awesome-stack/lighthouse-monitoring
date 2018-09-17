@@ -1,4 +1,4 @@
 #!/bin/bash
 cd $(dirname $0)
 
-docker run -v $(pwd):/app --rm lighthouse-monitoring bash -c 'node index.js'
+docker run -v $(pwd):/app --rm lighthouse-monitoring bash -c 'npm i && node index.js'

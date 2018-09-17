@@ -1,4 +1,4 @@
 [
-  { "url": "https://github.com/", "name": "GitHub", "category": "GH" },
-  { "url": "https://hub.docker.com/", "name": "DockerHub", "category": "DH" }
+  { "name": "GitHub", "url": "https://github.com/" },
+  { "name": "DockerHub", "url": "https://hub.docker.com/" }
 ]

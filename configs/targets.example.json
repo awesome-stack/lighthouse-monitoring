@@ -1,0 +1,4 @@
+[
+  { "url": "https://github.com/", "name": "GitHub", "category": "GH" },
+  { "url": "https://hub.docker.com/", "name": "DockerHub", "category": "DH" }
+]

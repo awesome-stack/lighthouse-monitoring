@@ -1,0 +1,13 @@
+{
+  "name": "lighthouse-monitoring",
+  "description": "Monitoring tool for Google Lighthouse.",
+  "version": "1.0.0",
+  "author": "awesome-stack",
+  "license": "MIT",
+  "keywords": [
+    "lighthouse",
+    "monitoring",
+    "performance"
+  ],
+  "main": "index.js"
+}

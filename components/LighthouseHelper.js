@@ -2,21 +2,23 @@ const execSync = require('child_process').execSync;
 const fs = require('fs');
 const moment = require('moment');
 
+const REPORT_DIR_NAME = 'reports';
+
 module.exports = class LighthouseHelper {
 
   static getReportDirRelativePath(target) {
-    return 'reports/' + target.url.replace('://', '/');
+    return target.url.replace('://', '/');
   }
 
   static mkReportDir(rootPath, target) {
-    const reportDirPath = rootPath + '/' + this.getReportDirRelativePath(target);
+    const reportDirPath = rootPath + '/' + REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target);
     execSync(`mkdir -p ${reportDirPath}`);
     console.log(reportDirPath);
   }
 
   static getOutPath(target) {
     const now = moment().utcOffset(+9).format("YYYY-MM-DDTHH:mm:ss");
-    return this.getReportDirRelativePath(target) + now + '_lighthouse';
+    return REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target) + now + '_lighthouse';
   }
 
   static analyze(target) {
@@ -44,7 +46,7 @@ module.exports = class LighthouseHelper {
   static summary(rootPath, targets) {
     let latestArray = [];
     targets.forEach(target => {
-      const reportDirPath = rootPath + '/' + this.getReportDirRelativePath(target);
+      const reportDirPath = rootPath + '/' + REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target);
       const fileNames = fs.readdirSync(reportDirPath).filter(fileName => {
         return fileName.match(/_lighthouse.report.json/);
       });
@@ -66,7 +68,7 @@ module.exports = class LighthouseHelper {
       }
       fs.writeFileSync(reportDirPath + '/summary.json', JSON.stringify(summaryArray));
     });
-    fs.writeFileSync(rootPath + '/reports/latest.json', JSON.stringify(latestArray));
+    fs.writeFileSync(rootPath + '/' + REPORT_DIR_NAME + '/latest.json', JSON.stringify(latestArray));
   }
 
 }

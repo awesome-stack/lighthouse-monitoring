@@ -1,5 +1,4 @@
 node_modules/
-**/reports/
 package-lock.json
 .DS_Store
 targets.json

@@ -11,6 +11,9 @@
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.semanticui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+  <!-- https://datatables.net/extensions/fixedheader/ -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.semanticui.min.css">
+  <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/fixedHeader.semanticui.min.js"></script>
   <!-- https://c3js.org/examples.html -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.7/c3.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
@@ -51,17 +54,20 @@
       </tr>
     </thead>
   </table>
-  <div id="performance" class="chart large"></div>
-  <div id="pwa" class="chart mini"></div>
-  <div id="accessibility" class="chart mini"></div>
-  <div id="best-practices" class="chart mini"></div>
-  <div id="seo" class="chart mini"></div>
-  <div id="first-contentful-paint" class="chart mini"></div>
-  <div id="first-meaningful-paint" class="chart mini"></div>
-  <div id="speed-index" class="chart mini"></div>
-  <div id="first-cpu-idle" class="chart mini"></div>
-  <div id="time-to-interactive" class="chart mini"></div>
-  <div id="estimated-input-latency" class="chart mini"></div>
+  <div id="graphArea">
+    <h2 id="graphTitle">Graph</h2>
+    <div id="performance" class="chart large"></div>
+    <div id="pwa" class="chart mini"></div>
+    <div id="accessibility" class="chart mini"></div>
+    <div id="best-practices" class="chart mini"></div>
+    <div id="seo" class="chart mini"></div>
+    <div id="first-contentful-paint" class="chart mini"></div>
+    <div id="first-meaningful-paint" class="chart mini"></div>
+    <div id="speed-index" class="chart mini"></div>
+    <div id="first-cpu-idle" class="chart mini"></div>
+    <div id="time-to-interactive" class="chart mini"></div>
+    <div id="estimated-input-latency" class="chart mini"></div>
+  </div>
   <script>
     function chartFromJson(jsonUrl, keyId, axisY) {
       var keyList = [];
@@ -88,7 +94,9 @@
       });
     }
 
-    function reloadChart(jsonUrl) {
+    function onSelectTarget(name, jsonUrl) {
+      $('#graphArea').show();
+      $('#graphTitle').text(name);
       // Score
       chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 });
       chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 });
@@ -109,14 +117,14 @@
         // language: { url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json" }
       });
       $("#latestTable").DataTable({
+        fixedHeader: true,
         ajax: { url: "./latest.json", dataSrc: '' },
         columns: [
           {
             data: "name",
             render: function (data, type, row, meta) {
               if (type === 'display') {
-                console.log(row.path);
-                data = '<a href="javascript:void(0);" onclick="reloadChart(\'' + row.path + '\');">' + data + '</a>'
+                data = '<a href="javascript:void(0);" onclick="onSelectTarget(\'' + data + '\',\'' + row.path + '\');">' + data + '</a>'
               }
               return data;
             }
@@ -138,6 +146,7 @@
           { data: "datetime" }
         ]
       });
+      $('#graphArea').hide();
     });
   </script>
 

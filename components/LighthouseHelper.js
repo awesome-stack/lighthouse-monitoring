@@ -61,7 +61,7 @@ module.exports = class LighthouseHelper {
           let latestJson = Object.assign({
             "name": target.name,
             "url": target.url,
-            "path": this.getReportDirRelativePath(target) + '/summary.json',
+            "path": (this.getReportDirRelativePath(target) + '/summary.json').replace('//', '/'),
           }, summaryJson);
           latestArray.push(latestJson);
         }

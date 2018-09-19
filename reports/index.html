@@ -22,16 +22,15 @@
     .chart.large {
       float: left;
       width: 100%;
-      height: 200px;
+      height: 300px;
       font-weight: bold;
       border: solid 1px gray;
       margin: auto;
     }
-
     .chart.mini {
       float: left;
       width: 50%;
-      height: 200px;
+      height: 300px;
       font-weight: bold;
       border: solid 1px gray;
       margin: auto;
@@ -73,6 +72,27 @@
       var keyList = [];
       keyList.push(keyId);
       return c3.generate({
+        title: {
+          show: true,
+          text: keyId,
+          position: 'top-center',   
+          padding: {
+            top: 20,
+            right: 20,
+            bottom: 40,
+            left: 50
+          }
+        },
+        legend: {
+          show: false,
+          // position: 'inset',
+          // inset: {
+          //   anchor: 'top-left', // top-left, top-center and top-right
+          //   x: 20,
+          //   y: 0,
+          //   step: 1
+          // },
+        },
         bindto: '#' + keyId,
         data: {
           url: jsonUrl,

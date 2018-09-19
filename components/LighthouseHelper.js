@@ -1,6 +1,7 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const moment = require('moment');
+const elasticsearch = require('elasticsearch');
 
 const REPORT_DIR_NAME = 'reports';
 
@@ -70,5 +71,23 @@ module.exports = class LighthouseHelper {
     });
     fs.writeFileSync(rootPath + '/' + REPORT_DIR_NAME + '/latest.json', JSON.stringify(latestArray));
   }
+
+  // // WIP
+  // static postES(hostUrl, reportJson, datetimeText) {
+  //   const summaryJson = this.getSummaryJson(reportJson, datetimeText);
+  //   const client = new elasticsearch.Client({
+  //     host: hostUrl,
+  //     log: 'trace'
+  //   });
+  //   client.bulk({
+  //     body: [
+  //       { "index": { "_index": "lighthouse", "_type": "lighthouse" } },
+  //       summaryJson,
+  //     ]
+  //   }, function (err, resp) {
+  //     console.log(err);
+  //     console.log(resp);
+  //   });
+  // }
 
 }

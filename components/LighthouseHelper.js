@@ -22,9 +22,9 @@ module.exports = class LighthouseHelper {
     return REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target) + now + '_lighthouse';
   }
 
-  static analyze(target) {
+  static analyze(target, options) {
     const outPath = this.getOutPath(target);
-    execSync(`lighthouse ${target.url} --output-path ${outPath} --chrome-flags="--headless" --output json --output html --no-enable-error-reporting`);
+    execSync(`lighthouse ${target.url} --output-path ${outPath} ${options}`);
   }
 
   static getSummaryJson(reportJson, datetimeText) {

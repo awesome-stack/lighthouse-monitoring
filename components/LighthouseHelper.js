@@ -24,7 +24,9 @@ module.exports = class LighthouseHelper {
 
   static analyze(target, options) {
     const outPath = this.getOutPath(target);
-    execSync(`lighthouse ${target.url} --output-path ${outPath} ${options}`);
+    const command = `lighthouse ${target.url} --output-path ${outPath} ${options}`;
+    console.log(command);
+    execSync(command);
   }
 
   static getSummaryJson(reportJson, datetimeText) {

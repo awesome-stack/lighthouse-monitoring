@@ -75,22 +75,23 @@ module.exports = class LighthouseHelper {
     fs.writeFileSync(rootPath + '/' + REPORT_DIR_NAME + '/latest.json', JSON.stringify(latestArray));
   }
 
-  // // WIP
-  // static postES(hostUrl, reportJson, datetimeText) {
-  //   const summaryJson = this.getSummaryJson(reportJson, datetimeText);
-  //   const client = new elasticsearch.Client({
-  //     host: hostUrl,
-  //     log: 'trace'
-  //   });
-  //   client.bulk({
-  //     body: [
-  //       { "index": { "_index": "lighthouse", "_type": "lighthouse" } },
-  //       summaryJson,
-  //     ]
-  //   }, function (err, resp) {
-  //     console.log(err);
-  //     console.log(resp);
-  //   });
-  // }
+  static postEs(esHost, latestJson) {
+    const client = new elasticsearch.Client({
+      host: esHost,
+      log: 'info'
+    });
+    client.bulk({
+      body: [
+        { "index": { "_index": "lighthouse", "_type": "lighthouse" } },
+        latestJson,
+      ]
+    }, function (err, resp) {
+      if (err !== undefined) {
+        console.log(err);
+      } else {
+        console.log(resp);
+      }
+    });
+  }
 
 }

@@ -32,6 +32,13 @@ sh run.sh
 ```
 -> reports/index.html
 
+### Post to ElasticSearch (Optional)
+```
+cp configs/esEnv.example.json configs/esEnv.json
+vi configs/esEnv.json
+sh runPostEs.sh
+```
+
 ## References
 * Metrics
     * [First Contentful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)

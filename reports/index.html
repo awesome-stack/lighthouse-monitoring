@@ -213,6 +213,8 @@
         // language: { url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json" }
       });
       var latestTable = $('#latestTable').DataTable({
+        lengthMenu: [[30, 50, -1], [30, 50, "All"]],
+        order: [[ 2, "desc" ]],
         fixedHeader: true,
         ajax: { url: "./latest.json", dataSrc: '' },
         columns: [

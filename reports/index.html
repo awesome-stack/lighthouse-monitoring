@@ -195,7 +195,8 @@
           ]);
           // EIL
           chartFromJson(jsonData, dirUrl, 'estimated-input-latency', 'Estimated Input Latency (ms)', axisY4Detail, [
-            { axis: 'y', start: 50, class: 'regionY-red' },
+            { axis: 'y', start: 105, class: 'regionY-red' },
+            { axis: 'y', start: 50, end: 104, class: 'regionY-yellow' },
             { axis: 'y', start: 0, end: 49, class: 'regionY-green' },
           ]);
           // TTFB

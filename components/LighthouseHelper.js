@@ -14,7 +14,7 @@ module.exports = class LighthouseHelper {
   static mkReportDir(rootPath, target) {
     const reportDirPath = rootPath + '/' + REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target);
     execSync(`mkdir -p ${reportDirPath}`);
-    console.log(reportDirPath);
+    console.log('[INFO] ' + reportDirPath);
   }
 
   static getOutPath(target) {
@@ -25,7 +25,7 @@ module.exports = class LighthouseHelper {
   static analyze(target, options) {
     const outPath = this.getOutPath(target);
     const command = `lighthouse ${target.url} --output-path ${outPath} ${options}`;
-    console.log(command);
+    console.log('[INFO] ' + command);
     execSync(command);
   }
 

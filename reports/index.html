@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>View</title>
+  <title>Lighthouse Result</title>
   <!-- https://datatables.net/manual/ -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css" />
@@ -120,7 +120,6 @@
           type: 'spline',
           onclick: function (d, element) {
             var relativeUrl = dirUrl + '/' + jsonData[d.index]['datetime'] + '_lighthouse.report.html';
-            console.log(relativeUrl);
             window.open(relativeUrl, '_blank', 'width=800,height=600');
           }
         },
@@ -143,11 +142,10 @@
     }
 
     function onSelectTarget(name, jsonUrl) {
-      console.log(jsonUrl);
       $('#graphArea').show();
       $('#graphTitle').text(name);
+      $('title').html(name + ' - Lighthouse Result');
       var dirUrl = jsonUrl.replace('/summary.json', '');
-      console.log(dirUrl);
       $.getJSON(jsonUrl,
         function (jsonData) {
           console.log(jsonData);
@@ -213,7 +211,7 @@
       $.extend($.fn.dataTable.defaults, {
         // language: { url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json" }
       });
-      $('#latestTable').DataTable({
+      var latestTable = $('#latestTable').DataTable({
         fixedHeader: true,
         ajax: { url: "./latest.json", dataSrc: '' },
         columns: [

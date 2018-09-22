@@ -17,6 +17,7 @@ try {
 }
 
 targets.forEach(target => {
+  console.log('[INFO] ' + target.name);
   LighthouseHelper.mkReportDir(__dirname + '/..', target);
   LighthouseHelper.analyze(target, options);
 });

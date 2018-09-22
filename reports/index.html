@@ -19,17 +19,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.7/c3.min.js"></script>
   <style>
-    .chart.large {
+    .chart {
       float: left;
       width: 100%;
-      height: 300px;
-      font-weight: bold;
-      border: solid 1px gray;
-      margin: auto;
-    }
-    .chart.mini {
-      float: left;
-      width: 50%;
       height: 300px;
       font-weight: bold;
       border: solid 1px gray;
@@ -55,17 +47,17 @@
   </table>
   <div id="graphArea">
     <h2 id="graphTitle">Graph</h2>
-    <div id="performance" class="chart large"></div>
-    <div id="pwa" class="chart mini"></div>
-    <div id="accessibility" class="chart mini"></div>
-    <div id="best-practices" class="chart mini"></div>
-    <div id="seo" class="chart mini"></div>
-    <div id="first-contentful-paint" class="chart mini"></div>
-    <div id="first-meaningful-paint" class="chart mini"></div>
-    <div id="speed-index" class="chart mini"></div>
-    <div id="first-cpu-idle" class="chart mini"></div>
-    <div id="time-to-interactive" class="chart mini"></div>
-    <div id="estimated-input-latency" class="chart mini"></div>
+    <div id="performance" class="chart"></div>
+    <div id="pwa" class="chart"></div>
+    <div id="accessibility" class="chart"></div>
+    <div id="best-practices" class="chart"></div>
+    <div id="seo" class="chart"></div>
+    <div id="first-contentful-paint" class="chart"></div>
+    <div id="first-meaningful-paint" class="chart"></div>
+    <div id="speed-index" class="chart"></div>
+    <div id="first-cpu-idle" class="chart"></div>
+    <div id="time-to-interactive" class="chart"></div>
+    <div id="estimated-input-latency" class="chart"></div>
   </div>
   <script>
     function chartFromJson(jsonUrl, keyId, axisY) {
@@ -75,7 +67,7 @@
         title: {
           show: true,
           text: keyId,
-          position: 'top-center',   
+          position: 'top-center',
           padding: {
             top: 20,
             right: 20,
@@ -105,7 +97,13 @@
         },
         axis: {
           x: {
-            type: 'category'
+            type: 'category',
+            multiline: true,
+            height: 77,
+            padding: {
+              left: 0,
+              right: 0
+            }
           },
           y: Object.assign({
             padding: { top: 0, bottom: 0 }

@@ -33,23 +33,28 @@ sh run.sh
 -> reports/index.html
 
 ## References
-* [First Contentful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)
- marks the time at which the first text or image is painted.
+* Metrics
+    * [First Contentful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)
+    marks the time at which the first text or image is painted.
 
-* [First Meaningful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)
- measures when the primary content of a page is visible.
+    * [First Meaningful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint)
+    measures when the primary content of a page is visible.
 
-* [Speed Index](https://developers.google.com/web/tools/lighthouse/audits/speed-index)
- shows how quickly the contents of a page are visibly populated.
+    * [Speed Index](https://developers.google.com/web/tools/lighthouse/audits/speed-index)
+    shows how quickly the contents of a page are visibly populated.
 
-* [First CPU Idle](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)
- marks the first time at which the page's main thread is quiet enough to handle input.
+    * [First CPU Idle](https://developers.google.com/web/tools/lighthouse/audits/first-interactive)
+    marks the first time at which the page's main thread is quiet enough to handle input.
 
-* [Time to Interactive](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)
- marks the time at which the page is fully interactive. 
+    * [Time to Interactive](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive)
+    marks the time at which the page is fully interactive. 
 
-* [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)
- is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy.
+    * [Estimated Input Latency](https://developers.google.com/web/tools/lighthouse/audits/estimated-input-latency)
+    is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy.
 
-* [Time To First Byte](https://developers.google.com/web/tools/lighthouse/audits/ttfb)
- identifies the time at which your server sends a response.
+    * [Time To First Byte](https://developers.google.com/web/tools/lighthouse/audits/ttfb)
+    identifies the time at which your server sends a response.
+* Fundamentals
+    * [Performance](https://developers.google.com/web/fundamentals/performance/get-started/)
+    * [RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
+        * [Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/)

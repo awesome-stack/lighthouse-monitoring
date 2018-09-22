@@ -32,16 +32,16 @@
       font-weight: bold;
     }
 
-    .c3-region.regionY-score-green {
-      fill: green;
+    .c3-region.regionY-green {
+      fill: #00E673;
     }
 
-    .c3-region.regionY-score-yellow {
-      fill: yellow;
+    .c3-region.regionY-yellow {
+      fill: #E6E600;
     }
 
-    .c3-region.regionY-score-red {
-      fill: red;
+    .c3-region.regionY-red {
+      fill: #E60000;
     }
   </style>
 </head>
@@ -139,9 +139,9 @@
       $('#graphTitle').text(name);
       // Score
       var regions4Score = [
-        { axis: 'y', start: 90, end: 100, class: 'regionY-score-green' },
-        { axis: 'y', start: 50, end: 89, class: 'regionY-score-yellow' },
-        { axis: 'y', start: 0, end: 49, class: 'regionY-score-red' },
+        { axis: 'y', start: 90, end: 100, class: 'regionY-green' },
+        { axis: 'y', start: 50, end: 89, class: 'regionY-yellow' },
+        { axis: 'y', start: 0, end: 49, class: 'regionY-red' },
       ];
       chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 }, 'Performance (score)', regions4Score);
       chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 }, 'Progressive Web App (score)', regions4Score);
@@ -154,8 +154,14 @@
       chartFromJson(jsonUrl, 'speed-index', { min: 0 }, 'Speed Index (ms)');
       chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 }, 'First CPU Idle (ms)');
       chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 }, 'Time to Interactive (ms)');
-      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 }, 'Estimated Input Latency (ms)');
-      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 }, 'Time To First Byte (ms)');
+      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 }, 'Estimated Input Latency (ms)', [
+        { axis: 'y', start: 50, class: 'regionY-red' },
+        { axis: 'y', start: 0, end: 49, class: 'regionY-green' },
+      ]);
+      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 }, 'Time To First Byte (ms)',[
+        { axis: 'y', start: 600, class: 'regionY-red' },
+        { axis: 'y', start: 0, end: 599, class: 'regionY-green' },
+      ]);
     }
 
     $(function () {

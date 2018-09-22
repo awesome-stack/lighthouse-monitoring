@@ -27,6 +27,22 @@
       border: solid 1px gray;
       margin: auto;
     }
+
+    .c3-title {
+      font-weight: bold;
+    }
+
+    .c3-region.regionY-score-green {
+      fill: green;
+    }
+
+    .c3-region.regionY-score-yellow {
+      fill: yellow;
+    }
+
+    .c3-region.regionY-score-red {
+      fill: red;
+    }
   </style>
 </head>
 
@@ -61,13 +77,17 @@
     <div id="time-to-first-byte" class="chart"></div>
   </div>
   <script>
-    function chartFromJson(jsonUrl, keyId, axisY) {
-      var keyList = [];
-      keyList.push(keyId);
+    function chartFromJson(jsonUrl, keyId, axisY, titleText, regions) {
+      var keyArray = [];
+      keyArray.push(keyId);
+      var regionArray = [];
+      if (regions !== undefined && regions.length > 0) {
+        regionArray = regionArray.concat(regions);
+      }
       return c3.generate({
         title: {
           show: true,
-          text: keyId,
+          text: titleText,
           position: 'top-center',
           padding: {
             top: 20,
@@ -92,7 +112,7 @@
           mimeType: 'json',
           keys: {
             x: 'datetime',
-            value: keyList,
+            value: keyArray,
           },
           type: 'spline'
         },
@@ -109,7 +129,8 @@
           y: Object.assign({
             padding: { top: 0, bottom: 0 }
           }, axisY)
-        }
+        },
+        regions: regionArray
       });
     }
 
@@ -117,19 +138,24 @@
       $('#graphArea').show();
       $('#graphTitle').text(name);
       // Score
-      chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 });
-      chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 });
-      chartFromJson(jsonUrl, 'accessibility', { max: 100, min: 0 });
-      chartFromJson(jsonUrl, 'best-practices', { max: 100, min: 0 });
-      chartFromJson(jsonUrl, 'seo', { max: 100, min: 0 });
+      var regions4Score = [
+        { axis: 'y', start: 90, end: 100, class: 'regionY-score-green' },
+        { axis: 'y', start: 50, end: 89, class: 'regionY-score-yellow' },
+        { axis: 'y', start: 0, end: 49, class: 'regionY-score-red' },
+      ];
+      chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 }, 'Performance (score)', regions4Score);
+      chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 }, 'Progressive Web App (score)', regions4Score);
+      chartFromJson(jsonUrl, 'accessibility', { max: 100, min: 0 }, 'Accessibility (score)', regions4Score);
+      chartFromJson(jsonUrl, 'best-practices', { max: 100, min: 0 }, 'Best Practices (score)', regions4Score);
+      chartFromJson(jsonUrl, 'seo', { max: 100, min: 0 }, 'SEO (score)', regions4Score);
       // Detail
-      chartFromJson(jsonUrl, 'first-contentful-paint', { min: 0 });
-      chartFromJson(jsonUrl, 'first-meaningful-paint', { min: 0 });
-      chartFromJson(jsonUrl, 'speed-index', { min: 0 });
-      chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 });
-      chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 });
-      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 });
-      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 });
+      chartFromJson(jsonUrl, 'first-contentful-paint', { min: 0 }, 'First Contentful Paint (ms)');
+      chartFromJson(jsonUrl, 'first-meaningful-paint', { min: 0 }, 'First Meaningful Paint (ms)');
+      chartFromJson(jsonUrl, 'speed-index', { min: 0 }, 'Speed Index (ms)');
+      chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 }, 'First CPU Idle (ms)');
+      chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 }, 'Time to Interactive (ms)');
+      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 }, 'Estimated Input Latency (ms)');
+      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 }, 'Time To First Byte (ms)');
     }
 
     $(function () {

@@ -43,6 +43,7 @@ module.exports = class LighthouseHelper {
       "first-cpu-idle": Math.round(reportJson.audits["first-cpu-idle"].rawValue),
       "time-to-interactive": Math.round(reportJson.audits["interactive"].rawValue),
       "estimated-input-latency": Math.round(reportJson.audits["estimated-input-latency"].rawValue),
+      "time-to-first-byte": Math.round(reportJson.audits["time-to-first-byte"].rawValue),
     }
   }
 

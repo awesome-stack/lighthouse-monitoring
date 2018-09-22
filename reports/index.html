@@ -58,6 +58,7 @@
     <div id="first-cpu-idle" class="chart"></div>
     <div id="time-to-interactive" class="chart"></div>
     <div id="estimated-input-latency" class="chart"></div>
+    <div id="time-to-first-byte" class="chart"></div>
   </div>
   <script>
     function chartFromJson(jsonUrl, keyId, axisY) {
@@ -128,6 +129,7 @@
       chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 });
       chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 });
       chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 });
+      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 });
     }
 
     $(function () {

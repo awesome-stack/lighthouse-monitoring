@@ -77,7 +77,7 @@
     <div id="time-to-first-byte" class="chart"></div>
   </div>
   <script>
-    function chartFromJson(jsonUrl, keyId, axisY, titleText, regions) {
+    function chartFromJson(jsonData, dirUrl, keyId, titleText, axisY, regions) {
       var keyArray = [];
       keyArray.push(keyId);
       var regionArray = [];
@@ -108,13 +108,18 @@
         },
         bindto: '#' + keyId,
         data: {
-          url: jsonUrl,
+          json: jsonData,
           mimeType: 'json',
           keys: {
             x: 'datetime',
             value: keyArray,
           },
-          type: 'spline'
+          type: 'spline',
+          onclick: function (d, element) {
+            var relativeUrl = dirUrl + '/' + jsonData[d.index]['datetime'] + '_lighthouse.report.html';
+            console.log(relativeUrl);
+            window.open(relativeUrl, '_blank', 'width=800,height=600');
+          }
         },
         axis: {
           x: {
@@ -135,45 +140,55 @@
     }
 
     function onSelectTarget(name, jsonUrl) {
+      console.log(jsonUrl);
       $('#graphArea').show();
       $('#graphTitle').text(name);
-      // Score
-      var regions4Score = [
-        { axis: 'y', start: 90, end: 100, class: 'regionY-green' },
-        { axis: 'y', start: 50, end: 89, class: 'regionY-yellow' },
-        { axis: 'y', start: 0, end: 49, class: 'regionY-red' },
-      ];
-      chartFromJson(jsonUrl, 'performance', { max: 100, min: 0 }, 'Performance (score)', regions4Score);
-      chartFromJson(jsonUrl, 'pwa', { max: 100, min: 0 }, 'Progressive Web App (score)', regions4Score);
-      chartFromJson(jsonUrl, 'accessibility', { max: 100, min: 0 }, 'Accessibility (score)', regions4Score);
-      chartFromJson(jsonUrl, 'best-practices', { max: 100, min: 0 }, 'Best Practices (score)', regions4Score);
-      chartFromJson(jsonUrl, 'seo', { max: 100, min: 0 }, 'SEO (score)', regions4Score);
-      // Detail
-      chartFromJson(jsonUrl, 'first-contentful-paint', { min: 0 }, 'First Contentful Paint (ms)');
-      chartFromJson(jsonUrl, 'first-meaningful-paint', { min: 0 }, 'First Meaningful Paint (ms)');
-      chartFromJson(jsonUrl, 'speed-index', { min: 0 }, 'Speed Index (ms)');
-      chartFromJson(jsonUrl, 'first-cpu-idle', { min: 0 }, 'First CPU Idle (ms)');
-      chartFromJson(jsonUrl, 'time-to-interactive', { min: 0 }, 'Time to Interactive (ms)');
-      chartFromJson(jsonUrl, 'estimated-input-latency', { min: 0 }, 'Estimated Input Latency (ms)', [
-        { axis: 'y', start: 50, class: 'regionY-red' },
-        { axis: 'y', start: 0, end: 49, class: 'regionY-green' },
-      ]);
-      chartFromJson(jsonUrl, 'time-to-first-byte', { min: 0 }, 'Time To First Byte (ms)',[
-        { axis: 'y', start: 600, class: 'regionY-red' },
-        { axis: 'y', start: 0, end: 599, class: 'regionY-green' },
-      ]);
+      var dirUrl = jsonUrl.replace('/summary.json', '');
+      console.log(dirUrl);
+      $.getJSON(jsonUrl,
+        function (jsonData) {
+          console.log(jsonData);
+          // Score
+          var regions4Score = [
+            { axis: 'y', start: 90, end: 100, class: 'regionY-green' },
+            { axis: 'y', start: 50, end: 89, class: 'regionY-yellow' },
+            { axis: 'y', start: 0, end: 49, class: 'regionY-red' },
+          ];
+          var axisY4Score = { max: 100, min: 0 };
+          chartFromJson(jsonData, dirUrl, 'performance', 'Performance (score)', axisY4Score, regions4Score);
+          chartFromJson(jsonData, dirUrl, 'pwa', 'Progressive Web App (score)', axisY4Score, regions4Score);
+          chartFromJson(jsonData, dirUrl, 'accessibility', 'Accessibility (score)', axisY4Score, regions4Score);
+          chartFromJson(jsonData, dirUrl, 'best-practices', 'Best Practices (score)', axisY4Score, regions4Score);
+          chartFromJson(jsonData, dirUrl, 'seo', 'SEO (score)', axisY4Score, regions4Score);
+          // Detail
+          var axisY4Detail = { min: 0 };
+          chartFromJson(jsonData, dirUrl, 'first-contentful-paint', 'First Contentful Paint (ms)', axisY4Detail);
+          chartFromJson(jsonData, dirUrl, 'first-meaningful-paint', 'First Meaningful Paint (ms)', axisY4Detail);
+          chartFromJson(jsonData, dirUrl, 'speed-index', 'Speed Index (ms)', axisY4Detail);
+          chartFromJson(jsonData, dirUrl, 'first-cpu-idle', 'First CPU Idle (ms)', axisY4Detail);
+          chartFromJson(jsonData, dirUrl, 'time-to-interactive', 'Time to Interactive (ms)', axisY4Detail);
+          chartFromJson(jsonData, dirUrl, 'estimated-input-latency', 'Estimated Input Latency (ms)', axisY4Detail, [
+            { axis: 'y', start: 50, class: 'regionY-red' },
+            { axis: 'y', start: 0, end: 49, class: 'regionY-green' },
+          ]);
+          chartFromJson(jsonData, dirUrl, 'time-to-first-byte', 'Time To First Byte (ms)', axisY4Detail, [
+            { axis: 'y', start: 600, class: 'regionY-red' },
+            { axis: 'y', start: 0, end: 599, class: 'regionY-green' },
+          ]);
+        }
+      );
     }
 
     $(function () {
       $.extend($.fn.dataTable.defaults, {
         // language: { url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json" }
       });
-      $("#latestTable").DataTable({
+      $('#latestTable').DataTable({
         fixedHeader: true,
         ajax: { url: "./latest.json", dataSrc: '' },
         columns: [
           {
-            data: "name",
+            data: 'name',
             render: function (data, type, row, meta) {
               if (type === 'display') {
                 data = '<a href="javascript:void(0);" onclick="onSelectTarget(\'' + data + '\',\'' + row.path + '\');">' + data + '</a>'
@@ -182,7 +197,7 @@
             }
           },
           {
-            data: "url",
+            data: 'url',
             render: function (data, type, row, meta) {
               if (type === 'display') {
                 data = '<a href="' + row.url + '">' + data + '</a>';
@@ -190,12 +205,12 @@
               return data;
             }
           },
-          { data: "performance" },
-          { data: "pwa" },
-          { data: "accessibility" },
-          { data: "best-practices" },
-          { data: "seo" },
-          { data: "datetime" }
+          { data: 'performance' },
+          { data: 'pwa' },
+          { data: 'accessibility' },
+          { data: 'best-practices' },
+          { data: 'seo' },
+          { data: 'datetime' }
         ]
       });
       $('#graphArea').hide();

@@ -8,7 +8,7 @@ const REPORT_DIR_NAME = 'reports';
 module.exports = class LighthouseHelper {
 
   static getReportDirRelativePath(target) {
-    return target.url.replace('://', '/');
+    return (target.url.replace('://', '/').replace('?', '') + '/').replace('//', '/');
   }
 
   static mkReportDir(rootPath, target) {

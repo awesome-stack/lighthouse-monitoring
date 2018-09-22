@@ -1,0 +1,23 @@
+.chart {
+  float: left;
+  width: 100%;
+  height: 300px;
+  font-weight: bold;
+  border: solid 1px gray;
+  margin: auto;
+}
+.c3-title {
+  font-weight: bold;
+}
+.c3-region.regionY-green {
+  fill: #00E673;
+ /* #3D7F41 */
+}
+.c3-region.regionY-yellow {
+  fill: #FFFF00;
+ /* #D87C2E */
+}
+.c3-region.regionY-red {
+  fill: #E60000;
+ /* #B8342A */
+}

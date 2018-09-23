@@ -66,7 +66,6 @@ function onSelectTarget(name, jsonUrl) {
   var dirUrl = jsonUrl.replace('/summary.json', '');
   $.getJSON(jsonUrl,
     function (jsonData) {
-      console.log(jsonData);
       // Score
       var regions4Score = [
         { axis: 'y', start: 90, end: 100, class: 'regionY-green' },
@@ -124,6 +123,12 @@ function onSelectTarget(name, jsonUrl) {
       ]);
     }
   );
+}
+
+function getParameter(key) {
+  var url = window.location;
+  var params = new URLSearchParams(url.search.slice(1));
+  return params.get(key);
 }
 
 $(function () {

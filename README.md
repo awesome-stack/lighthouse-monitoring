@@ -39,6 +39,13 @@ vi configs/esEnv.json
 sh runPostEs.sh
 ```
 
+### Post to Slack (Optional)
+```
+export SLACK_INCOMING_WEBHOOK_URL=${Your_Slack_Incoming_Webhook_URL}
+export SLACK_CHANNEL_NAME='#debug'
+sh runPostSlack.sh
+```
+
 ## References
 * Metrics
     * [First Contentful Paint](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)

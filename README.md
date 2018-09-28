@@ -26,11 +26,24 @@ cp configs/headers.example.json configs/headers.json
 vi configs/headers.json
 ```
 
-### Run
+### Run on Docker
 ```
 sh run.sh
 ```
 -> reports/index.html
+
+### Run on Local
+#### Visible mode
+```
+export SHOW_CHROME=yes
+sh runLocal.sh
+```
+
+#### Headless mode (default)
+```
+export SHOW_CHROME=no
+sh runLocal.sh
+```
 
 ### Post to ElasticSearch (Optional)
 ```

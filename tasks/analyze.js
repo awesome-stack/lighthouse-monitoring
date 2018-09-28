@@ -4,7 +4,11 @@ const targets = require('../configs/targets.json');
 
 // Specify options except output-path.
 // c.f.) https://github.com/GoogleChrome/lighthouse#cli-options
-let options = '--no-enable-error-reporting --chrome-flags="--headless" --output json --output html';
+let options = '--no-enable-error-reporting --output json --output html';
+
+if (process.env.SHOW_CHROME !== 'yes') {
+  options += ' --chrome-flags="--headless"'
+}
 
 // If headers.json exist, add option.
 const headersJsonPath = __dirname + '/../configs/headers.json';

@@ -1,4 +1,4 @@
-const LighthouseHelper = require('../components/LighthouseHelper');
+const SummaryHelper = require('../components/SummaryHelper');
 const targets = require('../configs/targets.json');
 
-LighthouseHelper.summary(__dirname + '/..', targets);
+SummaryHelper.summary(__dirname + '/..', targets);

@@ -1,29 +1,12 @@
+const ReportHelper = require('./ReportHelper');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
-const moment = require('moment');
 const elasticsearch = require('elasticsearch');
-
-const REPORT_DIR_NAME = 'reports';
 
 module.exports = class LighthouseHelper {
 
-  static getReportDirRelativePath(target) {
-    return (target.url.replace('://', '/').replace('?', '') + '/').replace('//', '/');
-  }
-
-  static mkReportDir(rootPath, target) {
-    const reportDirPath = rootPath + '/' + REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target);
-    execSync(`mkdir -p ${reportDirPath}`);
-    console.log('[INFO] ' + reportDirPath);
-  }
-
-  static getOutPath(target) {
-    const now = moment().utcOffset(+9).format("YYYY-MM-DDTHH:mm:ss");
-    return REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target) + now + '_lighthouse';
-  }
-
   static analyze(target, options) {
-    const outPath = this.getOutPath(target);
+    const outPath = ReportHelper.getOutPath(target, 'lighthouse');
     const command = `lighthouse ${target.url} --output-path ${outPath} ${options}`;
     console.log('[INFO] ' + command);
     execSync(command);
@@ -50,7 +33,7 @@ module.exports = class LighthouseHelper {
   static summary(rootPath, targets) {
     let latestArray = [];
     targets.forEach(target => {
-      const reportDirPath = rootPath + '/' + REPORT_DIR_NAME + '/' + this.getReportDirRelativePath(target);
+      const reportDirPath = rootPath + '/' + ReportHelper.getReportDirName() + '/' + ReportHelper.getReportDirRelativePath(target);
       const fileNames = fs.readdirSync(reportDirPath).filter(fileName => {
         return fileName.match(/_lighthouse.report.json/);
       });
@@ -65,14 +48,14 @@ module.exports = class LighthouseHelper {
           let latestJson = Object.assign({
             "name": target.name,
             "url": target.url,
-            "path": (this.getReportDirRelativePath(target) + '/summary.json').replace('//', '/'),
+            "path": (ReportHelper.getReportDirRelativePath(target) + '/summary.json').replace('//', '/'),
           }, summaryJson);
           latestArray.push(latestJson);
         }
       }
       fs.writeFileSync(reportDirPath + '/summary.json', JSON.stringify(summaryArray));
     });
-    fs.writeFileSync(rootPath + '/' + REPORT_DIR_NAME + '/latest.json', JSON.stringify(latestArray));
+    fs.writeFileSync(rootPath + '/' + ReportHelper.getReportDirName() + '/latest.json', JSON.stringify(latestArray));
   }
 
   static postEs(esHost, latestJson) {

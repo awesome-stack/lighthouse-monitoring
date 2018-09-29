@@ -1,4 +1,5 @@
 const LighthouseHelper = require('../components/LighthouseHelper');
+const ReportHelper = require('../components/ReportHelper');
 const targets = require('../configs/targets.json');
 
 // Specify options except output-path.
@@ -17,6 +18,6 @@ targets.forEach(target => {
     const headers_options = JSON.stringify(target.headers).replace(/"/g, '\\\"');
     options += ' --extra-headers ' + headers_options;
   }
-  LighthouseHelper.mkReportDir(__dirname + '/..', target);
+  ReportHelper.mkReportDir(__dirname + '/..', target);
   LighthouseHelper.analyze(target, options);
 });

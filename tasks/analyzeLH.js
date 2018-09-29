@@ -11,7 +11,7 @@ if (process.env.SHOW_CHROME !== 'yes') {
 }
 
 targets.forEach(target => {
-  console.log('[INFO] ' + target.name);
+  console.log('[INFO] Lighthouse: ' + target.name);
   let options = common_options;
   // If headers exist, add option.
   if (target.headers !== undefined) {

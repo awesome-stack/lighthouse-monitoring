@@ -18,24 +18,31 @@ cp configs/targets.example.json configs/targets.json
 vi configs/targets.json
 ```
 
-### Run on Docker
+### Run Lighthouse
+
+#### on Docker
 ```
 sh run.sh
 ```
 -> reports/index.html
 
-### Run on Local
+#### on Local (not use Docker)
 
-#### Visible mode
+Headless mode (default)
+```
+sh runLocal.sh
+```
+
+Visible mode
 ```
 export SHOW_CHROME=yes
 sh runLocal.sh
 ```
 
-#### Headless mode (default)
+### Run with PagespeedInsights (Optional)
 ```
-export SHOW_CHROME=no
-sh runLocal.sh
+export PSI_API_KEY=${Your_PageSpeedInsights_ApiKey}
+sh run.sh
 ```
 
 ### Post to ElasticSearch (Optional)

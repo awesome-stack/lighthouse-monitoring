@@ -1,2 +1,2 @@
-require('./tasks/analyze');
+require('./tasks/analyzeLH');
 require('./tasks/summary');

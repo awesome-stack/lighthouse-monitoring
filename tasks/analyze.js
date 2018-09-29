@@ -1,4 +1,3 @@
-const fs = require('fs');
 const LighthouseHelper = require('../components/LighthouseHelper');
 const targets = require('../configs/targets.json');
 

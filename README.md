@@ -85,3 +85,5 @@ sh runPostSlack.sh
     * [Performance](https://developers.google.com/web/fundamentals/performance/get-started/)
     * [RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
         * [Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/)
+* PageSpeedInsights
+    * [APIs Explorer](https://developers.google.com/apis-explorer/#p/pagespeedonline/v4/pagespeedonline.pagespeedapi.runpagespeed)

@@ -10,6 +10,13 @@ if (apiKey === undefined) {
 
 targets.forEach(target => {
   console.log('[INFO] PageSpeedInsights: ' + target.name);
+  let strategy = 'mobile';
+  if (target.device === 'desktop') {
+    console.log('[INFO] as Desktop.');
+    strategy = 'desktop';
+  } else {
+    console.log('[INFO] as Mobile.');
+  }
   ReportHelper.mkReportDir(__dirname + '/..', target);
-  PageSpeedInsightsHelper.analyze(target, apiKey);
+  PageSpeedInsightsHelper.analyze(target, apiKey, strategy);
 });

@@ -45,6 +45,13 @@ export PSI_API_KEY=${Your_PageSpeedInsights_ApiKey}
 sh run.sh
 ```
 
+### Post to Slack (Optional)
+```
+export SLACK_INCOMING_WEBHOOK_URL=${Your_Slack_Incoming_Webhook_URL}
+export SLACK_CHANNEL_NAME='#debug'
+sh runPostSlack.sh
+```
+
 ### Post to ElasticSearch (Optional)
 ```
 cp configs/esEnv.example.json configs/esEnv.json
@@ -52,11 +59,11 @@ vi configs/esEnv.json
 sh runPostEs.sh
 ```
 
-### Post to Slack (Optional)
+### Post to MySQL (Optional)
 ```
-export SLACK_INCOMING_WEBHOOK_URL=${Your_Slack_Incoming_Webhook_URL}
-export SLACK_CHANNEL_NAME='#debug'
-sh runPostSlack.sh
+cp configs/mysqlEnv.example.json configs/mysqlEnv.json
+vi configs/mysqlEnv.json
+sh runPostMySQL.sh
 ```
 
 ## References

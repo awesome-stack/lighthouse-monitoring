@@ -1,0 +1,6 @@
+{
+  "host": "docker.for.mac.host.internal",
+  "database": "app",
+  "username": "app",
+  "password": "app"
+}

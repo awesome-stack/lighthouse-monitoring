@@ -1,10 +1,11 @@
-const LighthouseHelper = require('../components/LighthouseHelper');
+const ElasticsearchHelper = require('../components/ElasticsearchHelper');
 const esEnv = require('../configs/esEnv.json');
 
-const esHost = esEnv["host"];
+const esHost = esEnv['host'];
 const latestJsonArray = require(__dirname + '/../' + 'reports/latest.json');
+const indexName = 'web_performance';
 
 latestJsonArray.forEach(latestJson => {
   console.log(latestJson);
-  LighthouseHelper.postEs(esHost, latestJson);
+  ElasticsearchHelper.postEs(esHost, indexName, latestJson);
 });

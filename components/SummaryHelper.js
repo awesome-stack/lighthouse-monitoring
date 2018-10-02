@@ -1,10 +1,15 @@
 const ReportHelper = require('./ReportHelper');
 const fs = require('fs');
 
+const summaryJsonFileName = 'summary.json';
+const latestJsonFileName = 'latest.json';
+
 module.exports = class SummaryHelper {
 
-  static getSummaryJson(reportJson, datetimeText) {
+  static getSummaryJson(target, reportJson, datetimeText) {
     return {
+      "name": target.name,
+      "url": target.url,
       "datetime": datetimeText,
       "performance": Math.round(reportJson.categories.performance.score * 100),
       "pwa": Math.round(reportJson.categories.pwa.score * 100),
@@ -33,20 +38,18 @@ module.exports = class SummaryHelper {
         const fileName = fileNames[i];
         const datetimeText = fileName.replace('_lighthouse.report.json', '');
         const reportJson = require(reportDirPath + '/' + fileName);
-        const summaryJson = this.getSummaryJson(reportJson, datetimeText);
+        const summaryJson = this.getSummaryJson(target, reportJson, datetimeText);
         summaryArray.push(summaryJson);
         if (i === fileNames.length - 1) {
           let latestJson = Object.assign({
-            "name": target.name,
-            "url": target.url,
-            "path": (ReportHelper.getReportDirRelativePath(target) + '/summary.json').replace('//', '/'),
+            "path": (ReportHelper.getReportDirRelativePath(target) + '/' + summaryJsonFileName).replace('//', '/'),
           }, summaryJson);
           latestArray.push(latestJson);
         }
       }
-      fs.writeFileSync(reportDirPath + '/summary.json', JSON.stringify(summaryArray));
+      fs.writeFileSync(reportDirPath + '/' + summaryJsonFileName, JSON.stringify(summaryArray));
     });
-    fs.writeFileSync(rootPath + '/' + ReportHelper.getReportDirName() + '/latest.json', JSON.stringify(latestArray));
+    fs.writeFileSync(rootPath + '/' + ReportHelper.getReportDirName() + '/' + latestJsonFileName, JSON.stringify(latestArray));
   }
 
 }
